@@ -94,7 +94,12 @@ legend b { font: 500 12px/1 var(--mono); color: var(--leaf-ink); letter-spacing:
 .mail-meta { font: 13px/1.6 Arial, Helvetica, sans-serif; opacity: .62; margin: 0 0 18px; }
 .mail-text { font: 11pt/1.5 Arial, Helvetica, sans-serif; margin: 0 0 22px; max-width: 60ch; }
 .mail-text p { margin: 0 0 10px; }
-.sig { overflow-x: auto; padding-bottom: 4px; }
+.sig { overflow: hidden; }
+.fit { transform-origin: 0 0; }
+@media (max-width: 600px) {
+  .mail-body { padding: 20px 16px 22px; }
+  .card .mail-body { padding: 14px 14px 16px; }
+}
 .mail-note { margin: 0; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
 
 .pick { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
@@ -187,7 +192,8 @@ body { margin: 0; }
   <section class="all">
     <h2>Все раскладки разом</h2>
     <p class="sub">С тем же фото, шрифтом и темой, что выбраны выше. Нажмите на раскладку, чтобы выбрать её.
-      Справа указана ширина подписи: стандартная ширина письма — около 600&nbsp;px.</p>
+      Справа — ширина подписи и насколько её ужмёт телефон: почтовые приложения не прокручивают широкое
+      письмо вбок, а уменьшают его целиком под экран. Чем уже подпись, тем крупнее она на телефоне.</p>
     <div class="grid" id="all"></div>
   </section>
 
@@ -198,6 +204,7 @@ body { margin: 0; }
         <li><b>Это настоящий текст, а не картинка.</b> Телефон и почту можно скопировать, по ним работает поиск, а в Outlook с отключёнными картинками текст всё равно виден.</li>
         <li><b>Шрифты — только те, что уже стоят у получателя.</b> Свой шрифт в письмо не подгрузить: Gmail его вырезает. Все четыре варианта есть на Windows, Mac и iPhone. На Android Georgia и Palatino заменятся на похожую антикву телефона.</li>
         <li><b>Тёмная тема.</b> Apple Mail и Outlook сами подставляют светлую версию логотипа и иконок. Gmail так не умеет — там тёмная надпись логотипа тускнеет, это видно в режиме «Тёмная, Gmail».</li>
+        <li><b>На телефоне</b> почта не прокручивает подпись вбок, а целиком ужимает её под ширину экрана. Поэтому узкие раскладки — «Классика» и «Акцент» — на телефоне остаются крупнее всего.</li>
         <li><b>Размеры по нормам почты:</b> имя 18&nbsp;px, контакты 14&nbsp;px, должность 13&nbsp;px. Мельче 14&nbsp;px контакты делать нельзя — телефоны начинают сами увеличивать текст и вёрстка разъезжается.</li>
       </ul>
     </div>
@@ -233,6 +240,22 @@ function render(layout, font, photo, theme) {
   if (theme !== "light") for (const [a, b] of D.darkSwap) h = h.split(a).join(b);
   return h;
 }
+
+const PHONE = 350;   // ширина текста письма на обычном телефоне, px
+
+function fit(box) {
+  const inner = box.firstElementChild, table = inner && inner.querySelector("table");
+  if (!table) return;
+  inner.style.transform = ""; box.style.height = "";
+  const tw = table.offsetWidth, s = Math.min(1, box.clientWidth / tw);
+  inner.style.width = tw + "px";
+  if (s < 1) {
+    inner.style.transform = "scale(" + s + ")";
+    box.style.height = Math.ceil(inner.offsetHeight * s) + "px";
+  }
+}
+
+function fitAll() { document.querySelectorAll(".sig").forEach(fit); }
 
 function tableWidth(layout, font) {
   const m = D.frags[layout + "|" + font].match(/<table[^>]*width="(\d+)"/);
@@ -308,7 +331,7 @@ function selectCode() {
 
 function update() {
   const mode = state.theme === "light" ? "light" : "dark";
-  $("sig").innerHTML = render(state.layout, state.font, state.photo, state.theme);
+  $("sig").innerHTML = '<div class="fit">' + render(state.layout, state.font, state.photo, state.theme) + "</div>";
   $("mail").className = "mail-body " + mode;
 
   document.querySelectorAll("[data-layout]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.layout === state.layout));
@@ -330,12 +353,18 @@ function update() {
   D.layouts.forEach((l) => {
     const card = $("card-" + l.code);
     card.querySelector(".mail-body").className = "mail-body " + mode;
-    card.querySelector(".sig").innerHTML = render(l.code, state.font, state.photo, state.theme);
-    card.querySelector("small").textContent = tableWidth(l.code, state.font) + " px";
+    card.querySelector(".sig").innerHTML = '<div class="fit">' + render(l.code, state.font, state.photo, state.theme) + "</div>";
+    const w = tableWidth(l.code, state.font);
+    const pct = Math.round(Math.min(1, PHONE / w) * 100);
+    card.querySelector("small").textContent = w + " px · на телефоне " + (pct >= 100 ? "без уменьшения" : pct + "%");
   });
 
+  fitAll();
   try { localStorage.setItem("broccoli-sig", JSON.stringify(state)); } catch (e) { /* ok */ }
 }
+
+let fitTimer;
+addEventListener("resize", () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitAll, 80); });
 
 build();
 update();
