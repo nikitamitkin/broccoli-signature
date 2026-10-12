@@ -270,11 +270,18 @@ function fit(box) {
   const inner = box.firstElementChild, table = inner && inner.querySelector("table");
   if (!table) return;
   inner.style.transform = ""; box.style.height = "";
+  if (!box.clientWidth) return;   // вкладка в фоне и ещё не отрисована — подгоним, когда появится
   const tw = table.offsetWidth, s = Math.min(1, box.clientWidth / tw);
   inner.style.width = tw + "px";
   if (s < 1) { inner.style.transform = "scale(" + s + ")"; box.style.height = Math.ceil(inner.offsetHeight * s) + "px"; }
 }
 function fitAll() { document.querySelectorAll(".sig").forEach(fit); }
+let fitW = -1;   // пересчитать, когда страница реально получила ширину или её изменили
+if (window.ResizeObserver) new ResizeObserver((e) => {
+  const w = Math.round(e[0].contentRect.width);
+  if (w !== fitW) { fitW = w; fitAll(); }
+}).observe(document.querySelector(".wrap"));
+document.addEventListener("visibilitychange", fitAll);
 let ft; addEventListener("resize", () => { clearTimeout(ft); ft = setTimeout(fitAll, 80); });
 addEventListener("load", fitAll); fitAll();
 
