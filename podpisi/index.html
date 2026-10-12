@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Установка подписи — Broccoli Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@800&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Страница установки: карточка на сотрудника с кнопкой «Скопировать подпись»,
+   ниже — шаги для Gmail, Outlook и Apple Mail. */
+:root {
+  --paper: #F4F6F1; --card: #FFFFFF; --ink: #172014; --ink-2: #5A6455;
+  --line: #DAE1D4; --leaf: #229410; --leaf-ink: #1B7A0C; --leaf-soft: #E2F1DC;
+  --display: "Rokkitt", Georgia, "Times New Roman", serif;
+  --body: "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #111510; --card: #191E17; --ink: #E7ECE3; --ink-2: #9BA596;
+    --line: #2B3327; --leaf: #3CC42A; --leaf-ink: #6BDB5B; --leaf-soft: #1D2B19; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+
+header { display: grid; gap: 10px; max-width: 64ch; margin-bottom: 36px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--leaf-ink); }
+h1 { font: 800 clamp(34px, 5vw, 50px)/1 var(--display); margin: 0; text-wrap: balance; }
+.lede { margin: 0; color: var(--ink-2); font-size: 16px; }
+.steps-mini { margin: 6px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.steps-mini li { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; color: var(--ink-2); }
+.steps-mini b { color: var(--leaf-ink); font: 500 12px var(--mono); margin-right: 4px; }
+
+.people { display: grid; gap: 22px; }
+.person { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.person-head { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.person-head h2 { font: 800 24px/1.1 var(--display); margin: 0; }
+.person-head span { color: var(--ink-2); }
+.copy { margin-left: auto; appearance: none; font: 600 14px/1 var(--body); color: #fff; background: var(--leaf);
+  border: 0; border-radius: 9px; padding: 11px 16px; cursor: pointer; }
+.copy:focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
+.copy[data-state="done"] { background: var(--leaf-ink); }
+.status { flex-basis: 100%; margin: 0; font-size: 13px; color: var(--leaf-ink); min-height: 0; }
+.status:empty { display: none; }
+/* окно письма — всегда светлое: здесь показываем подпись такой, какой она уйдёт */
+.mail { background: #FFFFFF; padding: 20px 22px 22px; }
+.sig { overflow: hidden; }
+.fit { transform-origin: 0 0; }
+
+section.how { margin-top: 56px; }
+h2.sec { font: 800 30px/1.1 var(--display); margin: 0 0 6px; }
+.sub { margin: 0 0 20px; color: var(--ink-2); max-width: 64ch; }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 16px; }
+.how-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.how-card h3 { font: 600 16px/1.3 var(--body); margin: 0 0 8px; }
+.how-card ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-2); }
+.how-card b { color: var(--ink); font-weight: 600; }
+.note { margin-top: 18px; display: grid; gap: 8px; max-width: 70ch; color: var(--ink-2); font-size: 14px; }
+.note p { margin: 0; }
+.note b { color: var(--ink); font-weight: 600; }
+@media (max-width: 600px) { .mail { padding: 14px; } .copy { margin-left: 0; width: 100%; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Broccoli Group · email-подпись</span>
+    <h1>Установка подписи</h1>
+    <p class="lede">Найдите себя в списке, скопируйте подпись и вставьте её в настройках почты.
+      Шаги для Gmail, Outlook и Apple Mail — ниже.</p>
+    <ul class="steps-mini">
+      <li><b>1</b>Скопировать подпись</li>
+      <li><b>2</b>Открыть настройки подписи</li>
+      <li><b>3</b>Вставить и сохранить</li>
+    </ul>
+  </header>
+
+  <div class="people">
+<section class="person"><div class="person-head"><h2>София Кремнева</h2><span>Менеджер проекта</span><button class="copy" type="button" data-slug="sofia-kremneva">Скопировать подпись</button><p class="status" aria-live="polite"></p></div><div class="mail"><div class="sig" id="sig-sofia-kremneva"><div class="fit"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="648" style="width:648px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-sofia-kremneva.png" alt="София Кремнева" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="194" valign="middle" style="width:194px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">София Кремнева</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">Менеджер проекта</td></tr>
+      </table>
+    </td>
+    <td width="256" valign="middle" class="sig-vr" style="width:256px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79626336891" style="color:#6B6B6B;text-decoration:none;">+7 962 633 68 91</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:sofia.kremneva@broccoli.group" style="color:#6B6B6B;text-decoration:none;">sofia.kremneva@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></div></div></div><template id="tpl-sofia-kremneva"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="648" style="width:648px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-sofia-kremneva.png" alt="София Кремнева" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="194" valign="middle" style="width:194px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">София Кремнева</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">Менеджер проекта</td></tr>
+      </table>
+    </td>
+    <td width="256" valign="middle" class="sig-vr" style="width:256px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-phone.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79626336891" style="color:#6B6B6B;text-decoration:none;">+7 962 633 68 91</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-mail.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:sofia.kremneva@broccoli.group" style="color:#6B6B6B;text-decoration:none;">sofia.kremneva@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-globe.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/logo-broccoli-2l.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></template></section><section class="person"><div class="person-head"><h2>Максим Казьменко</h2><span>COO Broccoli Group</span><button class="copy" type="button" data-slug="maksim-kazmenko">Скопировать подпись</button><p class="status" aria-live="polite"></p></div><div class="mail"><div class="sig" id="sig-maksim-kazmenko"><div class="fit"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="693" style="width:693px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-maksim-kazmenko.png" alt="Максим Казьменко" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="218" valign="middle" style="width:218px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Максим Казьменко</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">COO Broccoli Group</td></tr>
+      </table>
+    </td>
+    <td width="277" valign="middle" class="sig-vr" style="width:277px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79261606455" style="color:#6B6B6B;text-decoration:none;">+7 926 160 64 55</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:maksim.kazmenko@broccoli.group" style="color:#6B6B6B;text-decoration:none;">maksim.kazmenko@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></div></div></div><template id="tpl-maksim-kazmenko"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="693" style="width:693px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-maksim-kazmenko.png" alt="Максим Казьменко" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="218" valign="middle" style="width:218px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Максим Казьменко</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">COO Broccoli Group</td></tr>
+      </table>
+    </td>
+    <td width="277" valign="middle" class="sig-vr" style="width:277px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-phone.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79261606455" style="color:#6B6B6B;text-decoration:none;">+7 926 160 64 55</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-mail.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:maksim.kazmenko@broccoli.group" style="color:#6B6B6B;text-decoration:none;">maksim.kazmenko@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-globe.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/logo-broccoli-2l.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></template></section><section class="person"><div class="person-head"><h2>Дарья Патакина</h2><span>Руководитель проектов</span><button class="copy" type="button" data-slug="darya-patakina">Скопировать подпись</button><p class="status" aria-live="polite"></p></div><div class="mail"><div class="sig" id="sig-darya-patakina"><div class="fit"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="642" style="width:642px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-darya-patakina.png" alt="Дарья Патакина" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="191" valign="middle" style="width:191px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Дарья Патакина</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">Руководитель проектов</td></tr>
+      </table>
+    </td>
+    <td width="253" valign="middle" class="sig-vr" style="width:253px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79152357871" style="color:#6B6B6B;text-decoration:none;">+7 915 235 78 71</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:darya.patakina@broccoli.group" style="color:#6B6B6B;text-decoration:none;">darya.patakina@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></div></div></div><template id="tpl-darya-patakina"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="642" style="width:642px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-darya-patakina.png" alt="Дарья Патакина" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="191" valign="middle" style="width:191px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Дарья Патакина</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">Руководитель проектов</td></tr>
+      </table>
+    </td>
+    <td width="253" valign="middle" class="sig-vr" style="width:253px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-phone.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79152357871" style="color:#6B6B6B;text-decoration:none;">+7 915 235 78 71</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-mail.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:darya.patakina@broccoli.group" style="color:#6B6B6B;text-decoration:none;">darya.patakina@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-globe.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/logo-broccoli-2l.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></template></section><section class="person"><div class="person-head"><h2>Михаил Герасимов</h2><span>CEO Broccoli Group</span><button class="copy" type="button" data-slug="mikhail-gerasimov">Скопировать подпись</button><p class="status" aria-live="polite"></p></div><div class="mail"><div class="sig" id="sig-mikhail-gerasimov"><div class="fit"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="689" style="width:689px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-mikhail-gerasimov.png" alt="Михаил Герасимов" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="216" valign="middle" style="width:216px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Михаил Герасимов</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">CEO Broccoli Group</td></tr>
+      </table>
+    </td>
+    <td width="275" valign="middle" class="sig-vr" style="width:275px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79252058065" style="color:#6B6B6B;text-decoration:none;">+7 925 205 80 65</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:mikhail.gerasimov@broccoli.group" style="color:#6B6B6B;text-decoration:none;">mikhail.gerasimov@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></div></div></div><template id="tpl-mikhail-gerasimov"><!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · начало ==== -->
+<!-- C · Три колонки с разделителями -->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="689" style="width:689px;border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+  <tr><td colspan="4" class="sig-rule" height="1" style="height:1px;line-height:1px;font-size:1px;border-top:1px solid #DADADA;">&nbsp;</td></tr>
+  <tr>
+    <td width="64" valign="middle" style="width:64px;padding:14px 0 0 0;font-size:0;line-height:0;"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/avatar-mikhail-gerasimov.png" alt="Михаил Герасимов" width="64" height="64" border="0" style="display:block;width:64px;min-width:64px;max-width:64px;height:64px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"></td>
+    <td width="216" valign="middle" style="width:216px;padding:14px 14px 0 12px;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+        <tr><td class="sig-n" style="padding:0 0 2px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:24px;font-weight:bold;color:#111111;white-space:nowrap;mso-line-height-rule:exactly;">Михаил Герасимов</td></tr>
+        <tr><td class="sig-m" style="padding:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:18px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;">CEO Broccoli Group</td></tr>
+      </table>
+    </td>
+    <td width="275" valign="middle" class="sig-vr" style="width:275px;padding:14px 14px 0 14px;border-left:1px solid #DADADA;"><table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-phone.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-phone.png" alt="Телефон" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="tel:+79252058065" style="color:#6B6B6B;text-decoration:none;">+7 925 205 80 65</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 6px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-mail.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-mail.png" alt="Почта" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 6px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="mailto:mikhail.gerasimov@broccoli.group" style="color:#6B6B6B;text-decoration:none;">mikhail.gerasimov@broccoli.group</a></td></tr><tr><td width="16" valign="middle" style="width:16px;padding:0 8px 0px 0;font-size:0;line-height:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/icon-globe.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/icon-globe.png" alt="Сайт" width="16" height="16" border="0" style="display:block;width:16px;min-width:16px;max-width:16px;height:16px;border:0;outline:none;text-decoration:none;"></picture></td><td class="sig-m" valign="middle" style="padding:0 0 0px 0;font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:20px;color:#6B6B6B;white-space:nowrap;mso-line-height-rule:exactly;"><a href="https://broccoli.group/" style="color:#6B6B6B;text-decoration:none;">broccoli.group</a></td></tr></table></td>
+    <td width="134" align="center" valign="middle" class="sig-vr" style="width:134px;padding:14px 0 0 14px;border-left:1px solid #DADADA;font-size:0;line-height:0;"><a href="https://broccoli.group/" style="text-decoration:none;border:0;"><picture><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-dark/logo-broccoli-2l.png" media="(prefers-color-scheme: dark)"><source srcset="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" media="(prefers-color-scheme: light)"><img src="https://nikitamitkin.github.io/broccoli-signature/v3/img-light/logo-broccoli-2l.png" alt="Broccoli Group" width="119" height="34" border="0" style="display:block;width:119px;min-width:119px;max-width:119px;height:34px;border:0;outline:none;text-decoration:none;"></picture></a></td>
+  </tr>
+</table>
+<!-- ==== BROCCOLI GROUP · EMAIL SIGNATURE · конец ==== --></template></section>
+  </div>
+
+  <section class="how">
+    <h2 class="sec">Куда вставить</h2>
+    <p class="sub">Подпись настраивается на компьютере. Вставляйте через Ctrl+V (на Mac — ⌘V), а не «вставить как текст»,
+      иначе пропадут картинки и форматирование.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <h3>Gmail</h3>
+        <ol>
+          <li>Шестерёнка справа вверху → <b>Все настройки</b>.</li>
+          <li>Вкладка <b>Общие</b> → раздел <b>Подпись</b> → <b>Создать</b>, назовите «Broccoli».</li>
+          <li>Вставьте подпись в поле справа.</li>
+          <li>Ниже выберите её в пунктах <b>Для новых писем</b> и <b>Для ответов</b>.</li>
+          <li>В самом низу страницы — <b>Сохранить изменения</b>.</li>
+        </ol>
+      </div>
+      <div class="how-card">
+        <h3>Outlook — новый и в браузере</h3>
+        <ol>
+          <li>Шестерёнка → <b>Учётные записи</b> → <b>Подписи</b>.</li>
+          <li><b>Новая подпись</b>, назовите «Broccoli».</li>
+          <li>Вставьте подпись в поле.</li>
+          <li>Выберите её для новых сообщений и ответов → <b>Сохранить</b>.</li>
+        </ol>
+      </div>
+      <div class="how-card">
+        <h3>Outlook — классический на Windows</h3>
+        <ol>
+          <li><b>Файл</b> → <b>Параметры</b> → <b>Почта</b> → <b>Подписи</b>.</li>
+          <li><b>Создать</b>, назовите «Broccoli».</li>
+          <li>Вставьте подпись в поле редактирования.</li>
+          <li>Справа выберите её для новых сообщений и ответов → <b>ОК</b>.</li>
+        </ol>
+      </div>
+      <div class="how-card">
+        <h3>Apple Mail на Mac</h3>
+        <ol>
+          <li><b>Почта</b> → <b>Настройки</b> → <b>Подписи</b>.</li>
+          <li>Выберите ящик и нажмите <b>+</b>.</li>
+          <li>Снимите галочку <b>«Всегда использовать мой шрифт по умолчанию»</b>.</li>
+          <li>Вставьте подпись и закройте настройки.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="note">
+      <p><b>На телефоне</b> почтовые приложения хранят свою, отдельную подпись, и она бывает только текстом. Эта подпись туда не встанет —
+        она работает в письмах, отправленных с компьютера.</p>
+      <p><b>Не видно фото или логотипа после вставки?</b> Картинки грузятся из интернета — проверьте соединение и обновите страницу настроек.
+        Если не помогло, скопируйте подпись ещё раз.</p>
+      <p><b>Кнопка не копирует?</b> Выделите подпись мышкой целиком и нажмите Ctrl+C.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+function fit(box) {
+  const inner = box.firstElementChild, table = inner && inner.querySelector("table");
+  if (!table) return;
+  inner.style.transform = ""; box.style.height = "";
+  const tw = table.offsetWidth, s = Math.min(1, box.clientWidth / tw);
+  inner.style.width = tw + "px";
+  if (s < 1) { inner.style.transform = "scale(" + s + ")"; box.style.height = Math.ceil(inner.offsetHeight * s) + "px"; }
+}
+function fitAll() { document.querySelectorAll(".sig").forEach(fit); }
+let ft; addEventListener("resize", () => { clearTimeout(ft); ft = setTimeout(fitAll, 80); });
+addEventListener("load", fitAll); fitAll();
+
+function report(btn, ok) {
+  const st = btn.parentElement.querySelector(".status");
+  btn.dataset.state = ok ? "done" : "";
+  btn.textContent = ok ? "Скопировано" : "Скопировать подпись";
+  st.textContent = ok ? "Подпись в буфере обмена. Теперь откройте настройки почты и вставьте её — шаги ниже."
+                      : "Не получилось скопировать автоматически. Выделите подпись мышкой и нажмите Ctrl+C.";
+}
+
+function selectCopy(el) {
+  const r = document.createRange(); r.selectNode(el);
+  const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  let ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+  s.removeAllRanges();
+  return ok;
+}
+
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".copy");
+  if (!btn) return;
+  const slug = btn.dataset.slug;
+  const html = document.getElementById("tpl-" + slug).innerHTML;      // вёрстка как есть, со ссылками на хостинг
+  const table = document.getElementById("sig-" + slug).querySelector("table");
+  const text = table.innerText;
+  try {
+    if (!window.ClipboardItem) throw new Error("no ClipboardItem");
+    await navigator.clipboard.write([new ClipboardItem({
+      "text/html": new Blob([html], { type: "text/html" }),
+      "text/plain": new Blob([text], { type: "text/plain" })
+    })]);
+    report(btn, true);
+  } catch (err) {
+    report(btn, selectCopy(table));
+  }
+});
+</script>
+</body>
+</html>
